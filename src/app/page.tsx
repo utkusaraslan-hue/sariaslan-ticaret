@@ -1,69 +1,75 @@
 import Image from "next/image";
+import Link from "next/link";
+import WheatVisual from "@/components/WheatVisual";
+import { blogYazilari } from "@/data/blog";
+import { fiyatlar } from "@/data/fiyatlar";
+import { formatTL } from "@/lib/format";
 
 export default function Home() {
+  const sonYazi = blogYazilari[0];
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="mx-auto max-w-6xl px-6 py-10">
+      <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
+        <div className="space-y-8">
+          {fiyatlar.map((fiyat) => (
+            <div key={fiyat.urun}>
+              <p className="text-lg font-bold uppercase text-ink">
+                {fiyat.urun} {fiyat.ozellik}
+              </p>
+              <div className="mt-3 flex flex-wrap items-baseline gap-x-10 gap-y-4">
+                <div>
+                  <span className="block text-xs font-medium uppercase tracking-wide text-ink/50">
+                    Alış
+                  </span>
+                  <span className="font-display text-2xl font-medium">
+                    {fiyat.alis === null ? "-" : formatTL(fiyat.alis)}
+                    {fiyat.alis !== null && (
+                      <span className="ml-1 text-sm text-ink/50">TL</span>
+                    )}
+                  </span>
+                </div>
+                <div>
+                  <span className="block text-xs font-medium uppercase tracking-wide text-ink/50">
+                    Satış
+                  </span>
+                  <span className="font-display text-2xl font-medium">
+                    {fiyat.satis === null ? "-" : formatTL(fiyat.satis)}
+                    {fiyat.satis !== null && (
+                      <span className="ml-1 text-sm text-ink/50">TL</span>
+                    )}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+
+        {sonYazi && (
+          <Link href={`/blog/${sonYazi.slug}`} className="group block">
+            <div className="aspect-[16/9] overflow-hidden bg-silo">
+              {sonYazi.resim ? (
+                <Image
+                  src={sonYazi.resim}
+                  alt=""
+                  className="h-full w-full object-cover"
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                />
+              ) : (
+                <WheatVisual />
+              )}
+            </div>
+            <div className="border border-t-0 border-line bg-paper-2 px-5 py-4">
+              <span className="block text-xs font-semibold uppercase text-rust">
+                Blog
+              </span>
+              <span className="mt-1 block font-display text-lg leading-snug group-hover:text-wheat">
+                {sonYazi.baslik}
+              </span>
+            </div>
+          </Link>
+        )}
+      </div>
     </div>
   );
 }

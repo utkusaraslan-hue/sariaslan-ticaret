@@ -1,26 +1,86 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-ink: #1a1512;
+  --color-paper: #fdf1e2;
+  --color-paper-2: #f6e6cf;
+  --color-silo: #171410;
+  --color-silo-2: #23201a;
+  --color-ticker: #100d09;
+  --color-wheat: #c9a339;
+  --color-wheat-light: #e4c869;
+  --color-moss: #33654a;
+  --color-moss-on-dark: #6fbf94;
+  --color-moss-pill: #e4efe7;
+  --color-rust: #9b3a2c;
+  --color-rust-on-dark: #e0796a;
+  --color-rust-pill: #f6e3df;
+  --color-line: rgba(26, 21, 18, 0.14);
+  --color-line-dark: rgba(245, 241, 230, 0.14);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--color-ink);
+  --color-paper: var(--color-paper);
+  --color-paper-2: var(--color-paper-2);
+  --color-silo: var(--color-silo);
+  --color-silo-2: var(--color-silo-2);
+  --color-ticker: var(--color-ticker);
+  --color-wheat: var(--color-wheat);
+  --color-wheat-light: var(--color-wheat-light);
+  --color-moss: var(--color-moss);
+  --color-moss-on-dark: var(--color-moss-on-dark);
+  --color-moss-pill: var(--color-moss-pill);
+  --color-rust: var(--color-rust);
+  --color-rust-on-dark: var(--color-rust-on-dark);
+  --color-rust-pill: var(--color-rust-pill);
+  --color-line: var(--color-line);
+  --color-line-dark: var(--color-line-dark);
+  --font-display: Verdana, Geneva, sans-serif;
+  --font-sans: Verdana, Geneva, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--color-line);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-ticker {
+  animation: ticker-scroll 32s linear infinite;
+}
+
+.animate-ticker:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-ticker {
+    animation: none;
+  }
 }
