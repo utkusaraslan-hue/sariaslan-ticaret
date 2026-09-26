@@ -25,6 +25,6 @@ git add src/data/il-fiyatlari.ts src/data/tmo-fiyatlari.ts
 git commit -m "Günlük fiyat güncellemesi ($(date '+%Y-%m-%d'))"
 git push origin main
 
-npx vercel --prod --yes
+npx vercel --prod --yes --scope achilles9
 
 echo "== $(date '+%Y-%m-%d %H:%M:%S') güncelleme tamamlandı =="
