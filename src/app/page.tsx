@@ -21,11 +21,11 @@ export default function Home() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-silo via-silo/70 to-silo/30" />
         <div className="relative mx-auto max-w-6xl px-6 py-24 sm:py-32">
-          <p className="text-sm font-semibold uppercase tracking-widest text-wheat">
-            Doğru fiyata hububat ticareti
+          <p className="text-sm font-semibold tracking-widest text-wheat">
+            DOĞRU FİYATA HUBUBAT TİCARETİ
           </p>
-          <h1 className="mt-4 max-w-2xl font-display text-5xl font-bold uppercase leading-[1.05] text-paper sm:text-6xl">
-            Tedarikçiden alıcıya, doğru fiyata ulaştırıyoruz
+          <h1 className="mt-4 max-w-2xl font-display text-5xl font-bold leading-[1.05] text-paper sm:text-6xl">
+            TEDARİKÇİDEN ALICIYA, DOĞRU FİYATA ULAŞTIRIYORUZ
           </h1>
           <p className="mt-5 max-w-lg text-paper/75">
             Ekmeklik ve makarnalık buğday, arpa ve mısırda tedarikçi ile
