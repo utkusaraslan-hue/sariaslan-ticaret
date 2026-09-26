@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { blogYazilari } from "@/data/blog";
+import Image from "next/image";
 import { bultenler } from "@/data/bultenler";
+import { haberler, haberlerTarihi } from "@/data/haberler";
 import { formatTarih } from "@/lib/format";
 
 export const metadata: Metadata = {
-  title: "Günlük Özetler — Sarıaslan Ticaret",
-  description: "Sarıaslan Ticaret günlük gıda ve tarım piyasası özet bültenleri.",
+  title: "Günlük Özet — Sarıaslan Ticaret",
+  description: "Sarıaslan Ticaret günlük gıda ve tarım piyasası özeti ve haberleri.",
 };
 
 export default function BlogPage() {
@@ -14,7 +14,7 @@ export default function BlogPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
-      <h1 className="font-display text-3xl font-medium">Günlük Özetler</h1>
+      <h1 className="font-display text-3xl font-medium">Günlük Özet</h1>
       <p className="mt-2 text-sm text-ink/60">
         Hububat ve gıda piyasasına dair günlük özet bülten (PDF).
       </p>
@@ -32,19 +32,44 @@ export default function BlogPage() {
         </div>
       )}
 
-      {blogYazilari.length > 0 && (
+      {haberler.length > 0 && (
         <>
-          <h2 className="mt-16 font-display text-xl font-medium">Haberler</h2>
+          <div className="mt-16 flex items-baseline justify-between gap-2">
+            <h2 className="font-display text-xl font-medium">Haberler</h2>
+            <p className="text-xs text-ink/40">{formatTarih(haberlerTarihi)}</p>
+          </div>
           <ul className="mt-6 divide-y divide-line">
-            {blogYazilari.map((yazi) => (
-              <li key={yazi.slug} className="py-6 first:pt-0">
-                <Link href={`/blog/${yazi.slug}`} className="group block">
-                  <h3 className="font-display text-xl font-medium group-hover:text-wheat">
-                    {yazi.baslik}
-                  </h3>
-                  <p className="mt-2 text-sm text-ink/60">{yazi.ozet}</p>
-                  <p className="mt-3 text-xs text-ink/40">{formatTarih(yazi.tarih)}</p>
-                </Link>
+            {haberler.map((haber) => (
+              <li key={haber.link} className="py-6 first:pt-0">
+                <a
+                  href={haber.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex gap-4"
+                >
+                  {haber.gorsel && (
+                    <div className="relative hidden h-20 w-28 shrink-0 overflow-hidden bg-silo sm:block">
+                      <Image
+                        src={haber.gorsel}
+                        alt=""
+                        fill
+                        className="object-cover"
+                        sizes="112px"
+                      />
+                    </div>
+                  )}
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-wheat">
+                      {haber.kaynak}
+                    </p>
+                    <h3 className="mt-1 font-display text-lg font-medium group-hover:text-wheat">
+                      {haber.baslik}
+                    </h3>
+                    {haber.ozet && (
+                      <p className="mt-2 text-sm text-ink/60">{haber.ozet}</p>
+                    )}
+                  </div>
+                </a>
               </li>
             ))}
           </ul>

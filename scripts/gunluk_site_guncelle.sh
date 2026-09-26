@@ -16,14 +16,17 @@ echo "== $(date '+%Y-%m-%d %H:%M:%S') güncelleme başladı =="
 python3 scripts/refresh_il_fiyatlari.py
 python3 scripts/refresh_tmo_konya.py
 python3 scripts/refresh_gida_bultenleri.py || echo "Bülten PDF'i bulunamadı, atlanıyor."
+python3 scripts/refresh_gida_haberleri.py || echo "Haber verisi bulunamadı, atlanıyor."
 
-if git diff --quiet -- src/data/il-fiyatlari.ts src/data/tmo-fiyatlari.ts src/data/bultenler.ts public/bultenler \
-   && ! git status --porcelain -- public/bultenler | grep -q '^??'; then
-  echo "Fiyatlarda/bültenlerde değişiklik yok, deploy atlanıyor."
+IZLENEN_YOLLAR="src/data/il-fiyatlari.ts src/data/tmo-fiyatlari.ts src/data/bultenler.ts public/bultenler src/data/haberler.ts public/haberler"
+
+if git diff --quiet -- $IZLENEN_YOLLAR \
+   && ! git status --porcelain -- public/bultenler public/haberler | grep -q '^??'; then
+  echo "Fiyatlarda/bültenlerde/haberlerde değişiklik yok, deploy atlanıyor."
   exit 0
 fi
 
-git add src/data/il-fiyatlari.ts src/data/tmo-fiyatlari.ts src/data/bultenler.ts public/bultenler
+git add $IZLENEN_YOLLAR
 git commit -m "Günlük fiyat güncellemesi ($(date '+%Y-%m-%d'))"
 git push origin main
 

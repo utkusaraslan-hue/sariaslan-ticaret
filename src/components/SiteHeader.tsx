@@ -9,7 +9,7 @@ import MarketTicker from "./MarketTicker";
 const links = [
   { href: "/", label: "Ana Sayfa" },
   { href: "/fiyatlar", label: "Fiyatlar" },
-  { href: "/blog", label: "Günlük Özetler" },
+  { href: "/blog", label: "Günlük Özet" },
   { href: "/iletisim", label: "İletişim" },
 ];
 

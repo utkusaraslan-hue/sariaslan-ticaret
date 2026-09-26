@@ -42,7 +42,7 @@ export default function Home() {
               href="/blog"
               className="border border-paper/40 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-paper transition-colors hover:border-wheat hover:text-wheat"
             >
-              Günlük Özetler
+              Günlük Özet
             </Link>
           </div>
         </div>
