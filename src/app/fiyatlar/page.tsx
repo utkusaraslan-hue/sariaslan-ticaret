@@ -26,13 +26,6 @@ export default function FiyatlarPage() {
       <h1 className="mt-2 font-display text-3xl font-medium">
         İllere göre alış-satış fiyatları
       </h1>
-      <p className="mt-3 max-w-2xl text-ink/70">
-        TÜRİB seans verilerinden derlenmiştir: alış fiyatımız o ildeki en
-        düşük kapanış fiyatının %10 altında, satış fiyatımız o ildeki en
-        yüksek kapanış fiyatının %10 üstündedir. Veri bulunmayan il/ürün
-        kombinasyonları listelenmez.
-      </p>
-
       <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {ilGruplari.map(([il, kayitlar]) => (
           <div key={il} className="border border-line bg-paper-2">
