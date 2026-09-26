@@ -27,22 +27,30 @@ def gg_aa_yyyy_to_iso(tarih: str) -> str:
 def main():
     HEDEF_KLASOR.mkdir(parents=True, exist_ok=True)
 
-    bultenler = []
+    adaylar = []
     for klasor in sorted(KAYNAK_KOK.iterdir()):
         if not klasor.is_dir() or not TARIH_DESENI.match(klasor.name):
             continue
         pdf = klasor / f"gunluk_gida_ozet_{klasor.name}.pdf"
         if not pdf.exists():
             continue
-        hedef_pdf = HEDEF_KLASOR / f"{klasor.name}.pdf"
-        shutil.copyfile(pdf, hedef_pdf)
-        bultenler.append({"tarih": gg_aa_yyyy_to_iso(klasor.name), "dosya": f"/bultenler/{klasor.name}.pdf"})
+        adaylar.append(klasor)
 
-    if not bultenler:
+    if not adaylar:
         print("Hiç bülten PDF'i bulunamadı, dosya güncellenmedi.", file=sys.stderr)
         sys.exit(1)
 
-    bultenler.sort(key=lambda b: b["tarih"], reverse=True)
+    # Sadece en güncel bülten tutulur — eski günlerin verisini saklamaya gerek yok.
+    en_guncel = max(adaylar, key=lambda k: gg_aa_yyyy_to_iso(k.name))
+    hedef_dosya_adi = f"{en_guncel.name}.pdf"
+
+    for eski in HEDEF_KLASOR.glob("*.pdf"):
+        if eski.name != hedef_dosya_adi:
+            eski.unlink()
+
+    shutil.copyfile(en_guncel / f"gunluk_gida_ozet_{en_guncel.name}.pdf", HEDEF_KLASOR / hedef_dosya_adi)
+
+    bultenler = [{"tarih": gg_aa_yyyy_to_iso(en_guncel.name), "dosya": f"/bultenler/{hedef_dosya_adi}"}]
 
     lines = [
         "export type Bulten = {",

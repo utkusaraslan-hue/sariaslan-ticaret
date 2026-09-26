@@ -10,30 +10,27 @@ export const metadata: Metadata = {
 };
 
 export default function BlogPage() {
+  const sonBulten = bultenler[0];
+
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
       <h1 className="font-display text-3xl font-medium">Günlük Özetler</h1>
       <p className="mt-2 text-sm text-ink/60">
-        Hububat ve gıda piyasasına dair günlük özet bültenler (PDF).
+        Hububat ve gıda piyasasına dair günlük özet bülten (PDF).
       </p>
 
-      <ul className="mt-8 divide-y divide-line">
-        {bultenler.map((bulten) => (
-          <li key={bulten.tarih} className="py-5 first:pt-0">
-            <a
-              href={bulten.dosya}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center justify-between gap-4"
-            >
-              <span className="font-display text-lg font-medium group-hover:text-wheat">
-                {formatTarih(bulten.tarih)} Günlük Özet
-              </span>
-              <span className="whitespace-nowrap text-sm text-wheat">PDF&apos;i görüntüle →</span>
-            </a>
-          </li>
-        ))}
-      </ul>
+      {sonBulten && (
+        <div className="mt-8">
+          <p className="mb-3 text-xs uppercase tracking-wide text-ink/40">
+            {formatTarih(sonBulten.tarih)} Günlük Özet
+          </p>
+          <iframe
+            src={sonBulten.dosya}
+            title="Günlük Özet"
+            className="h-[150vh] w-full border border-line"
+          />
+        </div>
+      )}
 
       {blogYazilari.length > 0 && (
         <>
