@@ -24,7 +24,7 @@ export default function Home() {
           <p className="text-sm font-semibold tracking-widest text-wheat">
             DOĞRU FİYATA HUBUBAT TİCARETİ
           </p>
-          <h1 className="mt-4 max-w-2xl font-display text-5xl font-bold leading-[1.05] text-paper sm:text-6xl">
+          <h1 className="mt-4 max-w-2xl font-display text-5xl font-bold leading-[1.25] text-paper sm:text-6xl">
             TEDARİKÇİDEN ALICIYA, DOĞRU FİYATA ULAŞTIRIYORUZ
           </h1>
           <p className="mt-5 max-w-lg text-paper/75">
