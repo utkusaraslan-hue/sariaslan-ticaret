@@ -1,0 +1,30 @@
+#!/bin/bash
+# Her gün TÜRİB (il bazlı) ve TMO (Konya) verisinden fiyatları yeniden
+# üretir, GitHub'a push eder ve Vercel'de production'a deploy eder.
+# launchd tarafından günlük 22:00'de tetiklenir
+# (bkz. ~/Library/LaunchAgents/com.yinebiagent.site-fiyat-guncelle.plist).
+
+set -euo pipefail
+
+REPO_DIR="/Users/utkus/Desktop/yine-bi-agent/website/web"
+cd "$REPO_DIR"
+
+export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
+
+echo "== $(date '+%Y-%m-%d %H:%M:%S') güncelleme başladı =="
+
+python3 scripts/refresh_il_fiyatlari.py
+python3 scripts/refresh_tmo_konya.py
+
+if git diff --quiet -- src/data/il-fiyatlari.ts src/data/tmo-fiyatlari.ts; then
+  echo "Fiyatlarda değişiklik yok, deploy atlanıyor."
+  exit 0
+fi
+
+git add src/data/il-fiyatlari.ts src/data/tmo-fiyatlari.ts
+git commit -m "Günlük fiyat güncellemesi ($(date '+%Y-%m-%d'))"
+git push origin main
+
+npx vercel --prod --yes
+
+echo "== $(date '+%Y-%m-%d %H:%M:%S') güncelleme tamamlandı =="

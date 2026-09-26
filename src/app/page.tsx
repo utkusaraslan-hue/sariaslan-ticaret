@@ -1,75 +1,116 @@
 import Image from "next/image";
 import Link from "next/link";
-import WheatVisual from "@/components/WheatVisual";
+import heroPhoto from "@/assets/stock/wheat-field-hero.jpg";
 import { blogYazilari } from "@/data/blog";
-import { fiyatlar } from "@/data/fiyatlar";
-import { formatTL } from "@/lib/format";
+import { tmoFiyatlari, tmoSonGuncelleme } from "@/data/tmo-fiyatlari";
+import { formatTL, formatTarih } from "@/lib/format";
 
 export default function Home() {
   const sonYazi = blogYazilari[0];
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-10">
-      <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
-        <div className="space-y-8">
-          {fiyatlar.map((fiyat) => (
-            <div key={fiyat.urun}>
-              <p className="text-lg font-bold uppercase text-ink">
-                {fiyat.urun} {fiyat.ozellik}
+    <>
+      <section className="relative overflow-hidden bg-silo">
+        <Image
+          src={heroPhoto}
+          alt=""
+          fill
+          priority
+          className="object-cover opacity-60"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-silo via-silo/70 to-silo/30" />
+        <div className="relative mx-auto max-w-6xl px-6 py-24 sm:py-32">
+          <p className="text-sm font-semibold uppercase tracking-widest text-wheat">
+            Doğru fiyata hububat ticareti
+          </p>
+          <h1 className="mt-4 max-w-2xl font-display text-5xl font-bold uppercase leading-[1.05] text-paper sm:text-6xl">
+            Tedarikçiden alıcıya, doğru fiyata ulaştırıyoruz
+          </h1>
+          <p className="mt-5 max-w-lg text-paper/75">
+            Ekmeklik ve makarnalık buğday, arpa ve mısırda tedarikçi ile
+            alıcıyı doğrudan buluşturuyoruz. Her gün güncel fiyat.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-4">
+            <Link
+              href="/fiyatlar"
+              className="bg-wheat px-6 py-3 text-sm font-semibold uppercase tracking-wide text-silo transition-colors hover:bg-wheat-light"
+            >
+              Fiyatlar
+            </Link>
+            <Link
+              href="/blog"
+              className="border border-paper/40 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-paper transition-colors hover:border-wheat hover:text-wheat"
+            >
+              Günlük Özetler
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 py-14">
+        <div className="flex flex-wrap items-baseline justify-between gap-2">
+          <p className="text-xs font-semibold uppercase tracking-widest text-ink/50">
+            Güncel Fiyatlar — TMO Konya
+          </p>
+          <p className="text-xs text-ink/40">
+            Güncelleme: {formatTarih(tmoSonGuncelleme)}
+          </p>
+        </div>
+        <div className="mt-4 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2">
+          {tmoFiyatlari.map((fiyat, i) => (
+            <div
+              key={fiyat.urun}
+              className={`bg-paper-2 p-6 ${
+                i === tmoFiyatlari.length - 1 && tmoFiyatlari.length % 2 === 1
+                  ? "sm:col-span-2"
+                  : ""
+              }`}
+            >
+              <p className="font-display text-lg font-medium uppercase text-ink">
+                {fiyat.urun}
               </p>
-              <div className="mt-3 flex flex-wrap items-baseline gap-x-10 gap-y-4">
-                <div>
-                  <span className="block text-xs font-medium uppercase tracking-wide text-ink/50">
-                    Alış
-                  </span>
-                  <span className="font-display text-2xl font-medium">
-                    {fiyat.alis === null ? "-" : formatTL(fiyat.alis)}
-                    {fiyat.alis !== null && (
-                      <span className="ml-1 text-sm text-ink/50">TL</span>
-                    )}
-                  </span>
-                </div>
-                <div>
-                  <span className="block text-xs font-medium uppercase tracking-wide text-ink/50">
-                    Satış
-                  </span>
-                  <span className="font-display text-2xl font-medium">
-                    {fiyat.satis === null ? "-" : formatTL(fiyat.satis)}
-                    {fiyat.satis !== null && (
-                      <span className="ml-1 text-sm text-ink/50">TL</span>
-                    )}
-                  </span>
-                </div>
-              </div>
+              <p className="mt-4 font-display text-2xl font-medium">
+                {formatTL(fiyat.fiyat)}
+                <span className="ml-1 text-sm text-ink/50">{fiyat.birim}</span>
+              </p>
             </div>
           ))}
         </div>
+      </section>
 
-        {sonYazi && (
-          <Link href={`/blog/${sonYazi.slug}`} className="group block">
-            <div className="aspect-[16/9] overflow-hidden bg-silo">
-              {sonYazi.resim ? (
+      {sonYazi && (
+        <section className="mx-auto max-w-6xl px-6 pb-16">
+          <p className="text-xs font-semibold uppercase tracking-widest text-ink/50">
+            Piyasa Haberleri
+          </p>
+          <Link
+            href={`/blog/${sonYazi.slug}`}
+            className="group mt-4 grid gap-0 overflow-hidden border border-line bg-paper-2 sm:grid-cols-[1.1fr_1fr]"
+          >
+            <div className="relative aspect-[16/10] sm:aspect-auto">
+              {sonYazi.resim && (
                 <Image
                   src={sonYazi.resim}
                   alt=""
-                  className="h-full w-full object-cover"
-                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 640px) 50vw, 100vw"
                 />
-              ) : (
-                <WheatVisual />
               )}
             </div>
-            <div className="border border-t-0 border-line bg-paper-2 px-5 py-4">
-              <span className="block text-xs font-semibold uppercase text-rust">
-                Blog
+            <div className="flex flex-col justify-center p-8">
+              <span className="text-xs font-semibold uppercase tracking-wide text-rust">
+                Haber
               </span>
-              <span className="mt-1 block font-display text-lg leading-snug group-hover:text-wheat">
+              <span className="mt-2 font-display text-2xl font-medium leading-snug group-hover:text-wheat">
                 {sonYazi.baslik}
               </span>
+              <span className="mt-3 text-sm text-ink/60">{sonYazi.ozet}</span>
             </div>
           </Link>
-        )}
-      </div>
-    </div>
+        </section>
+      )}
+    </>
   );
 }

@@ -2,8 +2,8 @@
 
 :root {
   --color-ink: #1a1512;
-  --color-paper: #fdf1e2;
-  --color-paper-2: #f6e6cf;
+  --color-paper: #f6f5f1;
+  --color-paper-2: #ffffff;
   --color-silo: #171410;
   --color-silo-2: #23201a;
   --color-ticker: #100d09;
@@ -36,7 +36,7 @@
   --color-rust-pill: var(--color-rust-pill);
   --color-line: var(--color-line);
   --color-line-dark: var(--color-line-dark);
-  --font-display: Verdana, Geneva, sans-serif;
+  --font-display: var(--font-oswald), Verdana, Geneva, sans-serif;
   --font-sans: Verdana, Geneva, sans-serif;
 }
 
