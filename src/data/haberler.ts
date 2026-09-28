@@ -8,7 +8,7 @@ export type Haber = {
 
 // gida-haberleri/ham-veri/ klasöründeki günlük haber taramasından üretilmiştir.
 // Bu dosya scripts/refresh_gida_haberleri.py tarafından otomatik üretilir — elle düzenlemeyin.
-export const haberlerTarihi = "2026-09-26";
+export const haberlerTarihi = "2026-09-27";
 
 export const haberler: Haber[] = [
   {
