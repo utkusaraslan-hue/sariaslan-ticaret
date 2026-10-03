@@ -6,5 +6,5 @@ export type Bulten = {
 // gida-haberleri/ klasöründeki günlük özet PDF'lerinden üretilmiştir.
 // Bu dosya scripts/refresh_gida_bultenleri.py tarafından otomatik üretilir — elle düzenlemeyin.
 export const bultenler: Bulten[] = [
-  { tarih: "2026-09-27", dosya: "/bultenler/27-09-2026.pdf" },
+  { tarih: "2026-10-03", dosya: "/bultenler/03-10-2026.pdf" },
 ];
